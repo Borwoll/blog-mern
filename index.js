@@ -8,6 +8,7 @@ import {validationResult} from "express-validator";
 import {registerValidation} from './validations/auth.js';
 
 import UserModel from './models/User.js';
+import checkAuth from "./utils/checkAuth.js";
 
 dotenv.config();
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}?retryWrites=true&w=majority`)
@@ -76,6 +77,19 @@ app.post('/auth/register', async (req, res) => {
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Не удалось создать пользователя'});
+    }
+})
+
+app.get('/auth/me', checkAuth, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.userId);
+        const { passwordHash, ... userData } = user._doc;
+        res.json({
+            ...userData
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Не удалось получить данные пользователя'});
     }
 })
 
