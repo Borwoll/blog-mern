@@ -12,7 +12,7 @@ export const getAll = async (req, res) => {
 
 export const getOne = async (req, res) => {
     try {
-        const post = await Post.findByIdAndUpdate(req.params.id, {$inc: {views: 1}}, {returnDocument: 'after'}).populate('user');
+        const post = await Post.findByIdAndUpdate(req.params.id, {$inc: {viewsCount: 1}}, {returnDocument: 'after'}).populate('user');
         res.json(post);
     } catch (e) {
         console.log(e);
