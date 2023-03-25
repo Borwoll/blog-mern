@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import multer from 'multer';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
@@ -34,6 +35,7 @@ const upload = multer({
 })
 
 app.use(express.json());
+app.use(cors());
 app.use('/uploads', express.static('./uploads'));
 
 app.post('/auth/login', valid.loginValidation, handleValidationErrors, UserController.login);
@@ -52,8 +54,8 @@ app.post('/posts', checkAuth, valid.postCreateValidation, handleValidationErrors
 app.patch('/posts/:id', checkAuth, valid.postCreateValidation, handleValidationErrors, PostController.update);
 app.delete('/posts/:id', checkAuth, PostController.deletePost);
 
-app.listen(3000, (err) => {
+app.listen(4444, (err) => {
     if (err)
         return console.log(err);
-    console.log('Example app listening on port 3000!');
+    console.log('Example app listening on port 4444!');
 });
