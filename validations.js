@@ -15,6 +15,6 @@ export const registerValidation = [
 export const postCreateValidation = [
     body('title').isLength({min: 5}).isString().withMessage('Минимум 5 символов'),
     body('content').isLength({min: 5}).isString().withMessage('Минимум 5 символов'),
-    body('tags').optional().isString().withMessage('Тег должен быть массивом'),
+    body('tags').optional().isArray().withMessage('Тег должен быть массивом'),
     body('image').optional().isURL().withMessage('Некорректный url изображения'),
 ]
